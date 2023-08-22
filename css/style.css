@@ -114,6 +114,9 @@ body {
   .dev-name {
     margin-bottom: 0;
   }
+  .weather {
+    margin-top: 50px;
+  }
   .weather h1 {
     font-size: 50px;
   }
