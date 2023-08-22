@@ -1,5 +1,7 @@
 let searchBar = document.querySelector( '.search-bar' );
 let searchButton = document.querySelector( '.search-button' );
+let error = document.querySelector( '.error' );
+let weather = document.querySelector( '.weather' );
 
 window.addEventListener( 'load', () => {
     getWeatherData('chittagong');
@@ -14,12 +16,18 @@ async function getWeatherData( city ) {
     console.log(data);
 
     if ( data.cod == 404 ) {
-        let weather = document.querySelector( '.weather' );
-        weather.innerHTML = '<h2>City is Not Found</h2>';
-        weather.style.color = 'red';
-        weather.style.marginTop = '30px';
+        error.style.display = 'block';
+        weather.style.display = 'none';
+        error.innerHTML = '<h2>City is Not Found</h2>';
+        error.style.color = 'red';
+        error.style.marginTop = '30px';
         searchBar.value = '';
     } else {
+
+        error.style.display = 'none';
+        weather.style.display = 'block';
+
+
         const temp = document.querySelector('.temp');
     temp.innerHTML = `${parseInt(data.main.temp)}`;
 
@@ -44,3 +52,8 @@ searchButton.addEventListener( "click",  ()=> {
     getWeatherData(searchBar.value);
 } )
 
+searchBar.addEventListener('keyup', function(event) {
+  if (event.keyCode === 13) {
+    searchButton.click();
+  }
+});
