@@ -2,10 +2,15 @@ let searchBar = document.querySelector( '.search-bar' );
 let searchButton = document.querySelector( '.search-button' );
 let error = document.querySelector( '.error' );
 let weather = document.querySelector( '.weather' );
+let history = document.querySelector( '#history' );
 
+//  load chittagong weather data in search bar 
 window.addEventListener( 'load', () => {
-    getWeatherData('chittagong');
-})
+    getWeatherData( 'chittagong' );
+} );
+
+
+
 
 async function getWeatherData( city ) {
     const apiKew = '3e744ba20e4b93bad78dcce16d11eef5'; 
@@ -13,8 +18,29 @@ async function getWeatherData( city ) {
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log(data);
+    console.log( data );
+    
+    let historyArr = JSON.parse( localStorage.getItem( 'history' ) );
+    if ( historyArr === null ) {
+        historyArr = [];
+    } 
+    historyArr.push( city );
+    localStorage.setItem( 'history', JSON.stringify( historyArr ) );
 
+    let historyList = document.getElementById( 'history' );
+    historyList.innerHTML = '';
+    for ( let i = 0; i < historyArr.length; i++ ) {
+                historyList.innerHTML += `<li>${historyArr[ i ]}</li>`;
+            }
+    if( historyArr.length > 3 ) {
+        historyArr.shift();
+        localStorage.setItem( 'history', JSON.stringify( historyArr ) );
+    }
+
+
+    
+
+    // this is for error handling and weather data 
     if ( data.cod == 404 ) {
         error.style.display = 'block';
         weather.style.display = 'none';
@@ -45,7 +71,9 @@ async function getWeatherData( city ) {
     wind.innerHTML = `${data.wind.speed} km/h`;
 
     searchBar.value = '';
+    
     }
+    
 }
 // getWeatherData('chittagong');
 searchButton.addEventListener( "click",  ()=> {
@@ -56,4 +84,4 @@ searchBar.addEventListener('keyup', function(event) {
   if (event.keyCode === 13) {
     searchButton.click();
   }
-});
+} );

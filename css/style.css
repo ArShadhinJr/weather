@@ -49,6 +49,24 @@ body {
 .search button img {
   width: 18px;
 }
+.history {
+  margin-top: 10px;
+  background: #33bfc436;
+  border-radius: 5px; 
+}
+.history ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.history ul li {
+  flex: 1;
+  cursor: pointer;
+}
+.history ul li:hover {
+  color: #222;
+}
 .weather-icon {
   width: 170px;
   margin-top: 30px;
