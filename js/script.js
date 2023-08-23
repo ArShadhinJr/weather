@@ -20,6 +20,7 @@ async function getWeatherData( city ) {
 
     console.log( data );
     
+    // this is for history handling
     let historyArr = JSON.parse( localStorage.getItem( 'history' ) );
     if ( historyArr === null ) {
         historyArr = [];
@@ -30,15 +31,14 @@ async function getWeatherData( city ) {
     let historyList = document.getElementById( 'history' );
     historyList.innerHTML = '';
     for ( let i = 0; i < historyArr.length; i++ ) {
-                historyList.innerHTML += `<li>${historyArr[ i ]}</li>`;
-            }
+        historyList.innerHTML += `<li>${historyArr[ i ]}</li>`;
+    }
+
+    // this is for history historyList
     if( historyArr.length > 3 ) {
         historyArr.shift();
         localStorage.setItem( 'history', JSON.stringify( historyArr ) );
     }
-
-
-    
 
     // this is for error handling and weather data 
     if ( data.cod == 404 ) {
@@ -50,11 +50,10 @@ async function getWeatherData( city ) {
         searchBar.value = '';
     } else {
 
-        error.style.display = 'none';
-        weather.style.display = 'block';
+    error.style.display = 'none';
+    weather.style.display = 'block';
 
-
-        const temp = document.querySelector('.temp');
+    const temp = document.querySelector('.temp');
     temp.innerHTML = `${parseInt(data.main.temp)}`;
 
     const cityName = document.querySelector('.city');
